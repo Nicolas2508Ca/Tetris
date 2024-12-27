@@ -1,18 +1,26 @@
-from colors import Colors
+from .colors import Colors
 import pygame
-from position import Position
+from .position import Position
 
 class  Block:
     def __init__ (self, id):
         self.id = id
         self.cells = {}
         self.cell_size = 30
+
+        # Define la posicion inicial del bloque
         self.row_offset = 0
         self.column_offset = 0
+
+        # Define el estado de rotacion del bloque ( por defecto todos los bloques empiezan en la rotacion 0)
         self.rotation_state = 0
+
         self.colors = Colors.get_cell_colors()
 
+    # Metodo para mover el bloque en el tablero
     def move(self, rows, columns):
+        # Se actualiza la posicion del bloque en el tablero, sumando las filas y columnas que se pasan como parametros con la posicion de origen.
+        # El operado += es equivalente a self.row_offset = self.row_offset + rows
         self.row_offset += rows
         self.column_offset += columns
 
@@ -24,8 +32,12 @@ class  Block:
             moved_tiles.append(position)
         return moved_tiles
     
+
+    # Metodo para rotar el bloque
     def rotate(self):
+        # Incremneta el valor del estado de rotacion en 1
         self.rotation_state += 1
+        # Si el esatdo de rotacion llega a 4 (longitud de la lista de rotaciones) se reinicia a 0 para volver a la rotacion inicial
         if self.rotation_state == len(self.cells):
             self.rotation_state = 0
 
