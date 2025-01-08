@@ -25,13 +25,14 @@ class  Block:
         self.column_offset += columns
 
     def get_cell_positions(self):
+        # Obtiene las posiciones de las celdas del bloque en la rotacion actual
         tiles = self.cells[self.rotation_state]
         moved_tiles = []
+        # Se recorre la lista de posiciones de las celdas y se crea una nueva lista con las posiciones actualizadas
         for position in tiles:
             position = Position(position.row + self.row_offset, position.column + self.column_offset)
             moved_tiles.append(position)
         return moved_tiles
-    
 
     # Metodo para rotar el bloque
     def rotate(self):
@@ -41,8 +42,11 @@ class  Block:
         if self.rotation_state == len(self.cells):
             self.rotation_state = 0
 
+    # Metodo para deshacer la rotacion, cuando el bloque no cabe en la cuadricula
     def undo_rotation(self):
+        # Decrementa el valor del estado de rotacion en 1
         self.rotation_state -= 1
+        # Si al restar 1 al estado de rotacion llega a 0, se reinicia a la ultima rotacion
         if self.rotation_state == 0:
             self.rotation_state = len(self.cells) -1
 
